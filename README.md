@@ -44,5 +44,5 @@
  - PR(Pull Request)시 메세지 제목은 다음과 같이 `[이름/닉네임] ㅇ주차 정리내용 제출.` 라고 적은 후 `create pull request` 버튼을 눌러주세요
  - PR : `base: [master]` <- `compare: [본인 github 아이디]`
 
- ❤️ 본인의 폴더안에 있는 [README.md](http://README.md) 파일은 자유롭게 사용해주세요🙂
+ ❤️ 본인의 폴더안에 있는 [README.md](http://README.md) 파일은 자유롭게 사용해주세요🙂<br>
  ❤️ 깃 사용법 참고) [https://umc-smwu.notion.site/Git-2aea3e9a04724a08881b8e61e306e5b1](https://www.notion.so/Git-2aea3e9a04724a08881b8e61e306e5b1)
