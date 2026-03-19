@@ -45,7 +45,4 @@
  - PR : `base: [master]` <- `compare: [본인 github 아이디]`
 
  ❤️ 본인의 폴더안에 있는 [README.md](http://README.md) 파일은 자유롭게 사용해주세요🙂
-
- ‼️ **본인의 폴더와 동일한 위치**에 있는 [README.md](http://README.md) 파일은 🚫절대 수정🚫하지 말아주세요 
-
  ❤️ 깃 사용법 참고) [https://umc-smwu.notion.site/Git-2aea3e9a04724a08881b8e61e306e5b1](https://www.notion.so/Git-2aea3e9a04724a08881b8e61e306e5b1)
