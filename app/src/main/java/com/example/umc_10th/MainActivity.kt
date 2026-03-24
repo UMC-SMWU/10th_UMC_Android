@@ -18,15 +18,25 @@ class MainActivity : AppCompatActivity() {
         binding.tvSubtitle.text = "감정우표를 선택해주세요"
         binding.tvDescription.text = "선택한 감정우표를 기반으로 맞춤형 질문이 배달됩니다"
 
-        binding.imgHappy.setImageResource(R.drawable.ic_happy)
+        binding.btnHappy.setOnClickListener {
+            binding.tvHappy.setTextColor(getColor(R.color.yellow))
+        }
         binding.tvHappy.text = "더없이 행복한 하루였어요"
-        binding.imgExcited.setImageResource(R.drawable.ic_excited)
+        binding.btnExcited.setOnClickListener{
+            binding.tvExcited.setTextColor(getColor(R.color.blue))
+        }
         binding.tvExcited.text = "들뜨고 흥분돼요"
-        binding.imgNormal.setImageResource(R.drawable.ic_normal)
+        binding.btnNormal.setOnClickListener{
+            binding.tvNormal.setTextColor(getColor(R.color.purple))
+        }
         binding.tvNormal.text = "평범한 하루였어요"
-        binding.imgNervous.setImageResource(R.drawable.ic_nervous)
+        binding.btnNervous.setOnClickListener{
+            binding.tvNervous.setTextColor(getColor(R.color.green))
+        }
         binding.tvNervous.text = "생각이 많아지고 불안해요"
-        binding.imgAngry.setImageResource(R.drawable.ic_angry)
+        binding.btnAngry.setOnClickListener{
+            binding.tvAngry.setTextColor(getColor(R.color.red))
+        }
         binding.tvAngry.text = "부글부글 화가 나요"
 
     }
