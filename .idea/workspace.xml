@@ -198,7 +198,31 @@
       <option name="project" value="LOCAL" />
       <updated>1774434697573</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="[Feat(제이/박유진)] 1주차 미션 완료">
+      <option name="closed" value="true" />
+      <created>1774434937993</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1774434937993</updated>
+    </task>
+    <task id="LOCAL-00005" summary="[Feat(제이/박유진)] 1주차 미션 완료">
+      <option name="closed" value="true" />
+      <created>1774435029325</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1774435029325</updated>
+    </task>
+    <task id="LOCAL-00006" summary="[Feat(제이/박유진)] 1주차 미션 완료">
+      <option name="closed" value="true" />
+      <created>1774437122917</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1774437122917</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
