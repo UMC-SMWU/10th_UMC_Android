@@ -65,7 +65,7 @@
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
     "url": "https://github.com/UMC-SMWU/10th_UMC_Android.git",
-    "accountId": "87a3fde6-cb01-46bf-9511-d3b86e70b81f"
+    "accountId": "e339a7e4-423b-42df-b1f4-e303450d1747"
   }
 }]]></component>
   <component name="GradleScriptDefinitionsStorage" workingDir="$PROJECT_DIR$" gradleHome="C:\Users\user\.gradle\wrapper\dists\gradle-9.3.1-bin\23ovyewtku6u96viwx3xl3oks\gradle-9.3.1" javaHome="C:\Program Files\Android\Android Studio\jbr" gradleVersion="9.3.1">
@@ -258,7 +258,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774437768811</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="[Feat(제이/박유진)] 1주차 미션 완료">
+      <option name="closed" value="true" />
+      <created>1774437819806</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1774437819806</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
