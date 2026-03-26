@@ -36,9 +36,26 @@
             android:layout_height="wrap_content"
             android:src="@drawable/home_logo"
             android:layout_marginTop="50dp"
-            android:layout_gravity="center_horizontal"
-            />
+            android:layout_gravity="center_horizontal" />
 
     </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/main_bnv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp"
+        android:paddingHorizontal="10dp"
+        android:paddingTop="5dp"
+        app:menu="@menu/bottom_nav_menu"
+        app:itemIconSize="24dp"
+        app:labelVisibilityMode="labeled"
+        android:background="@android:color/transparent"
+        app:itemRippleColor="@android:color/transparent"
+        app:itemActiveIndicatorStyle="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
