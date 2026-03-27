@@ -14,12 +14,49 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.tvTitle.text = "Discover"
-        binding.tvSubtitle.text = "3월 27일 금요일"
-        binding.myImage.setImageResource(R.drawable.home_logo)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.main_fragmentContainer, HomeFragment())
+            .commit()
 
+        binding.mainBnv.setOnItemSelectedListener { item ->
+            when (item.itemId){
 
+                R.id.homeFragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_fragmentContainer, HomeFragment())
+                        .commit()
+                    true
+                }
 
+                R.id.shoppingFragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_fragmentContainer, ShoppingFragment())
+                        .commit()
+                    true
+                }
 
+                R.id.wishlistFragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_fragmentContainer, WishlistFragment())
+                        .commit()
+                    true
+                }
+
+                R.id.bagFragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_fragmentContainer, BagFragment())
+                        .commit()
+                    true
+                }
+
+                R.id.userFragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_fragmentContainer, UserFragment())
+                        .commit()
+                    true
+                }
+                else -> false
+            }
+        }
     }
 }
