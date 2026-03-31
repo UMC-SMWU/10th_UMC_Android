@@ -5,7 +5,8 @@ import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.androidapp.databinding.ActivityMainBinding
-// test
+import androidx.fragment.app.Fragment
+
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val TAG = "LIFE_QUIZ"
@@ -19,51 +20,46 @@ class MainActivity : AppCompatActivity() {
 
         Log.d(TAG, "onCreate")
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.main_fragmentContainer, HomeFragment())
-            .commit()
+        replaceFragment(HomeFragment())
 
         binding.mainBnv.setOnItemSelectedListener { item ->
             when (item.itemId){
 
                 R.id.homeFragment -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_fragmentContainer, HomeFragment())
-                        .commit()
+                    replaceFragment(HomeFragment())
                     true
                 }
 
                 R.id.shoppingFragment -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_fragmentContainer, ShoppingFragment())
-                        .commit()
+                    replaceFragment(ShoppingFragment())
                     true
                 }
 
                 R.id.wishlistFragment -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_fragmentContainer, WishlistFragment())
-                        .commit()
+                    replaceFragment(WishlistFragment())
                     true
                 }
 
                 R.id.bagFragment -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_fragmentContainer, BagFragment())
-                        .commit()
+                    replaceFragment(BagFragment())
                     true
                 }
 
                 R.id.userFragment -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_fragmentContainer, UserFragment())
-                        .commit()
+                    replaceFragment(UserFragment())
                     true
                 }
                 else -> false
             }
         }
     }
+
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.main_fragmentContainer, fragment)
+            .commit()
+    }
+
     override fun onStart() {
         super.onStart()
         Log.d(TAG, "onStart")
