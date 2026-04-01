@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.activityViewModels
 import com.example.androidapp.databinding.FragmentShoppingBinding
 
 class ShoppingFragment : Fragment() {
     private var _binding: FragmentShoppingBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: ShoppingViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -23,7 +25,8 @@ class ShoppingFragment : Fragment() {
             ShoppingData(R.drawable.home_item2,"Nike Air Force 1 '07", "Basketball Socks","7 Colours","US\$115")
         )
 
-        val adapter = ShoppingAdapter(itemList)
+
+        val adapter = ShoppingAdapter(itemList, viewModel)
 
         binding.shoppingRecyclerView.adapter = adapter
         binding.shoppingRecyclerView.layoutManager =

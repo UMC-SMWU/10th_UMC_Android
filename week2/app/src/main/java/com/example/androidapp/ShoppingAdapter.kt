@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 
 class ShoppingAdapter(
-    private val itemList: List<ShoppingData>
+    private val itemList: List<ShoppingData>,
+    private val viewModel: ShoppingViewModel
 ) : RecyclerView.Adapter<ShoppingAdapter.ItemViewHolder>() {
 
     // ViewHolder
@@ -50,6 +51,16 @@ class ShoppingAdapter(
         // 클릭 이벤트
         holder.btnLike.setOnClickListener {
             item.isLiked = !item.isLiked
+
+            val list = viewModel.likedItems.value!!
+
+            if (item.isLiked) {
+                list.add(item)
+            } else {
+                list.remove(item)
+            }
+
+            viewModel.likedItems.value = list
             notifyItemChanged(position)
         }
     }
