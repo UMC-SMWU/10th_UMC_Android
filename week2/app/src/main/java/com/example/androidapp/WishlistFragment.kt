@@ -25,7 +25,6 @@ class WishlistFragment : Fragment() {
         binding.wishlistRecyclerView.layoutManager =
             LinearLayoutManager(requireContext())
 
-        viewModel.loadItems()
 
         viewModel.itemList.observe(viewLifecycleOwner) { list ->
             val likedList = list.filter { it.isLiked }

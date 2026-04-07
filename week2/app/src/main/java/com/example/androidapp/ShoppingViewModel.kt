@@ -15,8 +15,20 @@ class ShoppingViewModel(application: Application) : AndroidViewModel(application
 
     private val dataStore = DataStoreManager(application)
     val itemList = MutableLiveData<List<ShoppingData>>()
-    private val gson = Gson()
+    var fullList: List<ShoppingData> = emptyList()
 
+    init {
+        observeItems()
+    }
+
+    private fun observeItems() {
+        viewModelScope.launch {
+            dataStore.getItems().collect { list ->
+                fullList = list
+                itemList.postValue(list)
+            }
+        }
+    }
 
     fun saveItems(items: List<ShoppingData>) {
         viewModelScope.launch {
@@ -27,6 +39,7 @@ class ShoppingViewModel(application: Application) : AndroidViewModel(application
     fun loadItems(context: Context) {
         viewModelScope.launch {
             dataStore.getItems().collect { list ->
+                fullList = list
                 itemList.postValue(list)}
         }
     }
