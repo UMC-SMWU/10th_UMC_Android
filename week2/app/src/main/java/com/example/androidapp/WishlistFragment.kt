@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidapp.databinding.FragmentWishlistBinding
 
 class WishlistFragment : Fragment() {
@@ -15,32 +16,32 @@ class WishlistFragment : Fragment() {
     private val viewModel: ShoppingViewModel by activityViewModels()
 
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val adapter = ShoppingAdapter(emptyList(), viewModel)
+
+        binding.wishlistRecyclerView.adapter = adapter
+        binding.wishlistRecyclerView.layoutManager =
+            LinearLayoutManager(requireContext())
+
+        viewModel.loadItems()
+
+        viewModel.itemList.observe(viewLifecycleOwner) { list ->
+            val likedList = list.filter { it.isLiked }
+            adapter.updateList(likedList)
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentWishlistBinding.inflate(inflater, container, false)
         binding.tvWishlistTitle.text = "위시리스트"
-
         return binding.root
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        // 1️⃣ LayoutManager 설정
-        binding.wishlistRecyclerView.layoutManager =
-            GridLayoutManager(requireContext(), 2)
-
-        // 2️⃣ ViewModel 데이터 관찰 (핵심 ⭐)
-        viewModel.likedItems.observe(viewLifecycleOwner) { likedList ->
-            val adapter = ShoppingAdapter(likedList, viewModel)
-            binding.wishlistRecyclerView.adapter = adapter
-        }
-    }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -6,65 +6,57 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.androidapp.databinding.ShoppingItemBinding
 import com.google.android.material.button.MaterialButton
 
 class ShoppingAdapter(
-    private val itemList: List<ShoppingData>,
+    private var items: List<ShoppingData>,
     private val viewModel: ShoppingViewModel
-) : RecyclerView.Adapter<ShoppingAdapter.ItemViewHolder>() {
+) : RecyclerView.Adapter<ShoppingAdapter.ViewHolder>() {
 
-    // ViewHolder
-    class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val btnLike: ImageView = itemView.findViewById(R.id.btnLike)
-        val icShopping: ImageView = itemView.findViewById(R.id.ic_shoppingItem)
-        val tvName: TextView = itemView.findViewById(R.id.tvShoppingItem)
+    inner class ViewHolder(val binding: ShoppingItemBinding)
+        : RecyclerView.ViewHolder(binding.root)
 
-        val tvCategory: TextView = itemView.findViewById(R.id.tvShoppingCategory)
-
-        val tvColor: TextView = itemView.findViewById(R.id.tvShoppingColor)
-        val tvPrice: TextView = itemView.findViewById(R.id.tvShoppingPrice)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ShoppingItemBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
+        return ViewHolder(binding)
     }
 
-    // ViewHolder 생성
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.shopping_item, parent, false)
-        return ItemViewHolder(view)
-    }
+    override fun getItemCount() = items.size
 
-    // 데이터 연결
-    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val item = itemList[position]
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val item = items[position]
 
-        holder.icShopping.setImageResource(item.icon)
-        holder.tvName.text = item.name
-        holder.tvCategory.text = item.category
-        holder.tvColor.text = item.color
-        holder.tvPrice.text = item.price
+        holder.binding.apply {
+            icShoppingItem.setImageResource(item.icon)
+            tvShoppingItem.text = item.name
+            tvShoppingCategory.text = item.category
+            tvShoppingColor.text = item.color
+            tvShoppingPrice.text = item.price ?: ""
 
-        if (item.isLiked) {
-            holder.btnLike.setImageResource(R.drawable.ic_filledheart)
-        } else {
-            holder.btnLike.setImageResource(R.drawable.ic_emptyheart)
-        }
+            // 하트 상태 반영
+            btnLike.setImageResource(
+                if (item.isLiked) R.drawable.ic_filledheart
+                else R.drawable.ic_emptyheart
+            )
 
-        // 클릭 이벤트
-        holder.btnLike.setOnClickListener {
-            item.isLiked = !item.isLiked
+            btnLike.setOnClickListener {
+                item.isLiked = !item.isLiked
 
-            val list = viewModel.likedItems.value!!
+                // 전체 리스트 갱신 후 저장
+                val updatedList = items.toMutableList()
+                updatedList[position] = item
 
-            if (item.isLiked) {
-                list.add(item)
-            } else {
-                list.remove(item)
+                viewModel.saveItems(updatedList)
+                notifyItemChanged(position)
             }
-
-            viewModel.likedItems.value = list
-            notifyItemChanged(position)
         }
     }
 
-    // 아이템 개수
-    override fun getItemCount(): Int = itemList.size
+    fun updateList(newList: List<ShoppingData>) {
+        items = newList
+        notifyDataSetChanged()
+    }
 }

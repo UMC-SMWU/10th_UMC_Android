@@ -21,10 +21,11 @@ class ShoppingFragment : Fragment() {
         val itemList = listOf(
             ShoppingData(R.drawable.shopping_item,"Nike Everyday Plus Cushioned","Training Ankle Socks (6 Pairs)","5 Colours", "US\$10"),
             ShoppingData(R.drawable.shopping_item,"Nike Elite Crew","Basketball Socks","7 Colours", "US\$16"),
-            ShoppingData(R.drawable.home_item1,"Air Jordan XXXVI","Basketball Socks","7 Colours", "US\$185"),
-            ShoppingData(R.drawable.home_item2,"Nike Air Force 1 '07", "Basketball Socks","7 Colours","US\$115")
+            ShoppingData(R.drawable.home_item1,"Nike Air Force 1 '07","Women's Shoes","5 Colours", "US\$115"),
+            ShoppingData(R.drawable.home_item2,"Jordan ENike Air Force 1 '07 essentials", "Men's Shoes","2 Colours","US\$115")
         )
 
+        viewModel.saveItems(itemList)
 
         val adapter = ShoppingAdapter(itemList, viewModel)
 
