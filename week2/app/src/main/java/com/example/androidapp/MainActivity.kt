@@ -6,6 +6,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.androidapp.databinding.ActivityMainBinding
 import androidx.fragment.app.Fragment
+import com.example.androidapp.shopping.ShoppingContainerFragment
+import com.example.androidapp.shopping.tab.ShoppingFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -31,7 +33,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.shoppingFragment -> {
-                    replaceFragment(ShoppingFragment())
+                    replaceFragment(ShoppingContainerFragment())
                     true
                 }
 

@@ -1,15 +1,12 @@
-package com.example.androidapp
+package com.example.androidapp.shopping
 
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
-import com.google.gson.Gson
 import com.example.androidapp.DataStoreManager
-
+import kotlinx.coroutines.launch
 
 class ShoppingViewModel(application: Application) : AndroidViewModel(application) {
 

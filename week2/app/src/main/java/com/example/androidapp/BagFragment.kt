@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.androidapp.databinding.FragmentBagBinding
+import com.example.androidapp.shopping.tab.ShoppingFragment
 
 
 class BagFragment : Fragment() {

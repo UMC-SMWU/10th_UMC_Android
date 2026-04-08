@@ -9,6 +9,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidapp.databinding.FragmentWishlistBinding
+import com.example.androidapp.shopping.ShoppingAdapter
+import com.example.androidapp.shopping.ShoppingViewModel
 
 class WishlistFragment : Fragment() {
     private var _binding: FragmentWishlistBinding? = null

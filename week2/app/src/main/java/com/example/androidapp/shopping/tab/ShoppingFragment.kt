@@ -1,13 +1,17 @@
-package com.example.androidapp
+package com.example.androidapp.shopping.tab
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.GridLayoutManager
+import com.example.androidapp.R
 import com.example.androidapp.databinding.FragmentShoppingBinding
+import com.example.androidapp.shopping.ShoppingAdapter
+import com.example.androidapp.shopping.ShoppingData
+import com.example.androidapp.shopping.ShoppingViewModel
 
 class ShoppingFragment : Fragment() {
     private var _binding: FragmentShoppingBinding? = null
@@ -19,10 +23,34 @@ class ShoppingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val itemList = listOf(
-            ShoppingData(R.drawable.shopping_item,"Nike Everyday Plus Cushioned","Training Ankle Socks (6 Pairs)","5 Colours", "US\$10"),
-            ShoppingData(R.drawable.shopping_item,"Nike Elite Crew","Basketball Socks","7 Colours", "US\$16"),
-            ShoppingData(R.drawable.home_item1,"Nike Air Force 1 '07","Women's Shoes","5 Colours", "US\$115"),
-            ShoppingData(R.drawable.home_item2,"Jordan ENike Air Force 1 '07 essentials", "Men's Shoes","2 Colours","US\$115")
+            ShoppingData(
+                R.drawable.shopping_item,
+                "Nike Everyday Plus Cushioned",
+                "Training Ankle Socks (6 Pairs)",
+                "5 Colours",
+                "US\$10"
+            ),
+            ShoppingData(
+                R.drawable.shopping_item,
+                "Nike Elite Crew",
+                "Basketball Socks",
+                "7 Colours",
+                "US\$16"
+            ),
+            ShoppingData(
+                R.drawable.home_item1,
+                "Nike Air Force 1 '07",
+                "Women's Shoes",
+                "5 Colours",
+                "US\$115"
+            ),
+            ShoppingData(
+                R.drawable.home_item2,
+                "Jordan ENike Air Force 1 '07 essentials",
+                "Men's Shoes",
+                "2 Colours",
+                "US\$115"
+            )
         )
 
         viewModel.saveItems(itemList)

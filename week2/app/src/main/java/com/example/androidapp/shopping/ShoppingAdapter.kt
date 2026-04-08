@@ -1,13 +1,12 @@
-package com.example.androidapp
+package com.example.androidapp.shopping
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.androidapp.R
+import com.example.androidapp.shopping.ShoppingData
+import com.example.androidapp.shopping.ShoppingViewModel
 import com.example.androidapp.databinding.ShoppingItemBinding
-import com.google.android.material.button.MaterialButton
 
 class ShoppingAdapter(
     private var items: List<ShoppingData>,

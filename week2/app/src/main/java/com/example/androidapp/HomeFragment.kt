@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidapp.databinding.FragmentHomeBinding
+import com.example.androidapp.shopping.ShoppingViewModel
 
 class HomeFragment : Fragment() {
 
