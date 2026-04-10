@@ -55,12 +55,14 @@ class ShoppingFragment : Fragment() {
 
         viewModel.saveItems(itemList)
 
-        val adapter = ShoppingAdapter(itemList, viewModel)
+        val adapter = ShoppingAdapter(emptyList(), viewModel)
 
         binding.shoppingRecyclerView.adapter = adapter
         binding.shoppingRecyclerView.layoutManager =
             GridLayoutManager(requireContext(), 2)
         }
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,

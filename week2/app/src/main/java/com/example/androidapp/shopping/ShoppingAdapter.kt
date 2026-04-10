@@ -9,7 +9,7 @@ import com.example.androidapp.shopping.ShoppingViewModel
 import com.example.androidapp.databinding.ShoppingItemBinding
 
 class ShoppingAdapter(
-    private var items: List<ShoppingData>,
+    private var itemList: List<ShoppingData>,
     private val viewModel: ShoppingViewModel
 ) : RecyclerView.Adapter<ShoppingAdapter.ViewHolder>() {
 
@@ -23,10 +23,10 @@ class ShoppingAdapter(
         return ViewHolder(binding)
     }
 
-    override fun getItemCount() = items.size
+    override fun getItemCount() = itemList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = items[position]
+        val item = itemList[position]
 
         holder.binding.apply {
             icShoppingItem.setImageResource(item.icon)
@@ -45,7 +45,7 @@ class ShoppingAdapter(
                 item.isLiked = !item.isLiked
 
                 // 전체 리스트 갱신 후 저장
-                val updatedList = items.toMutableList()
+                val updatedList = itemList.toMutableList()
                 updatedList[position] = item
 
                 viewModel.saveItems(updatedList)
@@ -55,7 +55,7 @@ class ShoppingAdapter(
     }
 
     fun updateList(newList: List<ShoppingData>) {
-        items = newList
+        itemList = newList
         notifyDataSetChanged()
     }
 }

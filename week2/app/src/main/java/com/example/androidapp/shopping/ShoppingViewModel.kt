@@ -6,12 +6,15 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.androidapp.DataStoreManager
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class ShoppingViewModel(application: Application) : AndroidViewModel(application) {
 
     private val dataStore = DataStoreManager(application)
-    val itemList = MutableLiveData<List<ShoppingData>>()
+    private val _itemList = MutableStateFlow<List<ShoppingData>>(emptyList()) // viewmodel 내부용
+    val itemList: StateFlow<List<ShoppingData>> = _itemList
     var fullList: List<ShoppingData> = emptyList()
 
     init {
@@ -22,7 +25,7 @@ class ShoppingViewModel(application: Application) : AndroidViewModel(application
         viewModelScope.launch {
             dataStore.getItems().collect { list ->
                 fullList = list
-                itemList.postValue(list)
+                _itemList.value = list
             }
         }
     }
@@ -37,7 +40,7 @@ class ShoppingViewModel(application: Application) : AndroidViewModel(application
         viewModelScope.launch {
             dataStore.getItems().collect { list ->
                 fullList = list
-                itemList.postValue(list)}
+                _itemList.value = list
         }
     }
-}
+}}
