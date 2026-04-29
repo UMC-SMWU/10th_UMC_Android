@@ -8,8 +8,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class ItemAdapter(
-    private val itemList: List<ItemData>
+    private var itemList: List<ItemData>
 ) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
+
+    fun updateList(newList: List<ItemData>) {
+        itemList = newList
+        notifyDataSetChanged()
+    }
 
     // ViewHolder
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

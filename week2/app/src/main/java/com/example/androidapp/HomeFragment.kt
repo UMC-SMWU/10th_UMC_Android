@@ -5,26 +5,34 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidapp.databinding.FragmentHomeBinding
+import com.example.androidapp.shopping.ShoppingViewModel
 
 class HomeFragment : Fragment() {
 
+    private val viewModel: ShoppingViewModel by activityViewModels()
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private lateinit var adapter: ItemAdapter // 전역변수로 쓰기 위해 정의하고 아직 view가 생성되지 않았으므로 나중에 초기화한다는 lateinit 사용
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val itemList = listOf(
-            ItemData(R.drawable.home_item1,"Air Jordan XXXVI", "US\$185"),
-            ItemData(R.drawable.home_item2,"Nike Air Force 1 '07", "US\$115")
-        )
-
-        val adapter = ItemAdapter(itemList)
-
+        val adapter = ItemAdapter(emptyList())
         binding.homeRecyclerView.adapter = adapter
-        binding.homeRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.homeRecyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+        viewModel.itemList.observe(viewLifecycleOwner) { list ->
+            val homeList = list.take(2)
+
+            val mappedList = homeList.map {
+                ItemData(it.icon, it.name, it.price ?: "")
+            }
+
+            adapter.updateList(mappedList)
+        }
     }
 
     override fun onCreateView(
