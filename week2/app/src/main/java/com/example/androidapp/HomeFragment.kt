@@ -6,9 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidapp.databinding.FragmentHomeBinding
 import com.example.androidapp.shopping.ShoppingViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
@@ -19,19 +24,21 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = ItemAdapter(emptyList())
+        adapter = ItemAdapter(emptyList())
         binding.homeRecyclerView.adapter = adapter
         binding.homeRecyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
-        viewModel.itemList.observe(viewLifecycleOwner) { list ->
-            val homeList = list.take(2)
-
-            val mappedList = homeList.map {
-                ItemData(it.icon, it.name, it.price ?: "")
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.itemList.collectLatest { list ->
+                    val homeList = list.take(2)
+                    val mappedList = homeList.map {
+                        ItemData(it.icon, it.name, it.price ?: "")
+                    }
+                    adapter.updateList(mappedList)
+                }
             }
-
-            adapter.updateList(mappedList)
         }
     }
 
