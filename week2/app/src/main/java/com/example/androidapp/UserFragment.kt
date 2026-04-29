@@ -1,11 +1,16 @@
 package com.example.androidapp
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import com.example.androidapp.databinding.FragmentUserBinding
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class UserFragment : Fragment() {
     private var _binding: FragmentUserBinding? = null
@@ -25,31 +30,41 @@ class UserFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.tvNickname.text = "닉네임"
-
-        binding.btnEditProfile.setOnClickListener {
-        }
-
         binding.tvBenefitTitle.text = "나이키 멤버 혜택"
-
         binding.tvBenefitSub.text = "0개 사용 가능"
-
         binding.tvFollowingTitle.text = "팔로잉 (3)"
-
         binding.tvFollowingEdit.text = "편집"
 
 
-        binding.ivBenefitArrow.setOnClickListener {
-
-        }
-
-        binding.tvFollowingEdit.setOnClickListener {
-
-        }
-
         // 팔로잉 RecyclerView 설정
         // binding.rvFollowing.adapter = FollowingAdapter(followingList)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                val response = RetrofitClient.api.getUser(1)
+                val user = response.data
+
+                binding.tvNickname.text = "${user.first_name} ${user.last_name}"
+
+                val bitmap = withContext(Dispatchers.IO) {
+                    val connection = java.net.URL(user.avatar).openConnection()
+                            as java.net.HttpURLConnection
+                    connection.doInput = true
+                    connection.connect()
+                    BitmapFactory.decodeStream(connection.inputStream)
+                }
+                binding.ivProfile.setImageBitmap(bitmap)
+
+            } catch (e: Exception) {
+                binding.tvNickname.text = "불러오기 실패"
+            }
+        }
+
+        binding.btnEditProfile.setOnClickListener { }
+        binding.ivBenefitArrow.setOnClickListener { }
+        binding.tvFollowingEdit.setOnClickListener { }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
