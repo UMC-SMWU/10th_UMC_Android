@@ -2,11 +2,14 @@ package com.example.androidapp
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.example.androidapp.databinding.FragmentUserBinding
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.Dispatchers
@@ -32,12 +35,8 @@ class UserFragment : Fragment() {
 
         binding.tvBenefitTitle.text = "나이키 멤버 혜택"
         binding.tvBenefitSub.text = "0개 사용 가능"
-        binding.tvFollowingTitle.text = "팔로잉 (3)"
         binding.tvFollowingEdit.text = "편집"
 
-
-        // 팔로잉 RecyclerView 설정
-        // binding.rvFollowing.adapter = FollowingAdapter(followingList)
 
         viewLifecycleOwner.lifecycleScope.launch {
             try {
@@ -46,14 +45,23 @@ class UserFragment : Fragment() {
 
                 binding.tvNickname.text = "${user.first_name} ${user.last_name}"
 
-                val bitmap = withContext(Dispatchers.IO) {
-                    val connection = java.net.URL(user.avatar).openConnection()
-                            as java.net.HttpURLConnection
-                    connection.doInput = true
-                    connection.connect()
-                    BitmapFactory.decodeStream(connection.inputStream)
+                binding.ivProfile.load(user.avatar) {
+                    crossfade(true)
+                    placeholder(R.drawable.circle_gray_bg)
+                    transformations(CircleCropTransformation())
                 }
-                binding.ivProfile.setImageBitmap(bitmap)
+
+            } catch (e: Exception) {
+                binding.tvNickname.text = "닉네임 불러오기 실패"
+            }
+
+            try {
+                val listResponse = RetrofitClient.api.getUserList(1)
+                val userList = listResponse.data
+
+                binding.rvFollowing.adapter = FollowingAdapter(userList)
+
+                binding.tvFollowingTitle.text = "팔로잉 (${userList.size})"
 
             } catch (e: Exception) {
                 binding.tvNickname.text = "불러오기 실패"
