@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.androidapp.databinding.ActivityMainBinding
 import androidx.fragment.app.Fragment
 import com.example.androidapp.shopping.ShoppingContainerFragment
+import com.example.androidapp.MainBottomBar
 import com.example.androidapp.shopping.tab.ShoppingFragment
 
 class MainActivity : AppCompatActivity() {
@@ -24,36 +25,24 @@ class MainActivity : AppCompatActivity() {
 
         replaceFragment(HomeFragment())
 
-        binding.mainBnv.setOnItemSelectedListener { item ->
-            when (item.itemId){
-
-                R.id.homeFragment -> {
-                    replaceFragment(HomeFragment())
-                    true
-                }
-
-                R.id.shoppingFragment -> {
-                    replaceFragment(ShoppingContainerFragment())
-                    true
-                }
-
-                R.id.wishlistFragment -> {
-                    replaceFragment(WishlistFragment())
-                    true
-                }
-
-                R.id.bagFragment -> {
-                    replaceFragment(BagFragment())
-                    true
-                }
-
-                R.id.userFragment -> {
-                    replaceFragment(UserFragment())
-                    true
-                }
-                else -> false
+        binding.composeBottomBar.setContent {
+            MainBottomBar { tab ->
+                navigateTo(tab)
             }
         }
+    }
+
+    private fun navigateTo(tab: String) {
+        val fragment = when (tab) {
+            "home" -> HomeFragment()
+            "shopping" -> ShoppingContainerFragment()
+            "wishlist" -> WishlistFragment()
+            "bag" -> BagFragment()
+            "user" -> UserFragment()
+            else -> HomeFragment()
+        }
+
+        replaceFragment(fragment)
     }
 
     private fun replaceFragment(fragment: Fragment) {
