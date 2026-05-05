@@ -55,7 +55,7 @@ class ShoppingFragment : Fragment() {
 
         viewModel.saveItems(itemList)
 
-        val adapter = ShoppingAdapter(emptyList(), viewModel)
+        val adapter = ShoppingAdapter(itemList, viewModel)
 
         binding.shoppingRecyclerView.adapter = adapter
         binding.shoppingRecyclerView.layoutManager =
