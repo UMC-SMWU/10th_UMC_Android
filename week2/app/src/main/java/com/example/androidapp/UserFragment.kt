@@ -1,8 +1,6 @@
 package com.example.androidapp
 
-import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,25 +8,17 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import coil.load
 import coil.transform.CircleCropTransformation
+import com.example.androidapp.data.remote.RemoteUserRepository
+import com.example.androidapp.data.remote.RetrofitClient
 import com.example.androidapp.databinding.FragmentUserBinding
+import com.example.androidapp.repository.UserRepository
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class UserFragment : Fragment() {
     private var _binding: FragmentUserBinding? = null
     private val binding get() = _binding!!
+    private val userRepository: UserRepository = RemoteUserRepository()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-
-        _binding = FragmentUserBinding.inflate(inflater, container, false)
-
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,8 +30,7 @@ class UserFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                val response = RetrofitClient.api.getUser(1)
-                val user = response.data
+                val user = userRepository.getUser(1)
 
                 binding.tvNickname.text = "${user.first_name} ${user.last_name}"
 
@@ -56,8 +45,7 @@ class UserFragment : Fragment() {
             }
 
             try {
-                val listResponse = RetrofitClient.api.getUserList(1)
-                val userList = listResponse.data
+                val userList = userRepository.getUserList(1)
 
                 binding.rvFollowing.adapter = FollowingAdapter(userList)
 
