@@ -1,5 +1,7 @@
-package com.example.androidapp
+package com.example.androidapp.data.remote
 
+import com.example.androidapp.UserListResponse
+import com.example.androidapp.UserResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
