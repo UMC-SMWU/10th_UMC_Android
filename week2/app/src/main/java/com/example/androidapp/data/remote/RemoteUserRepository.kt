@@ -1,7 +1,7 @@
 package com.example.androidapp.data.remote
 
-import com.example.androidapp.repository.UserRepository
-import com.example.androidapp.UserData
+import com.example.androidapp.data.repository.UserRepository
+import com.example.androidapp.data.model.UserData
 
 class RemoteUserRepository : UserRepository {
     override suspend fun getUser(id: Int): UserData {

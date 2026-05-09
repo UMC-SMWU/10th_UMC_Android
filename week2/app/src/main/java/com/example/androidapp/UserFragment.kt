@@ -9,9 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import coil.load
 import coil.transform.CircleCropTransformation
-import com.example.androidapp.data.remote.RemoteUserRepository
 import com.example.androidapp.databinding.FragmentUserBinding
-import com.example.androidapp.repository.UserRepository
 import com.example.androidapp.viewmodel.UserViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

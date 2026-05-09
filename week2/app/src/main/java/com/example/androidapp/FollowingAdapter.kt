@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.androidapp.data.model.UserData
 import com.example.androidapp.databinding.ItemFollowingBinding
 
 class FollowingAdapter(

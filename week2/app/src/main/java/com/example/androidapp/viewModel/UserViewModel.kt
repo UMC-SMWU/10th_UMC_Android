@@ -2,9 +2,9 @@ package com.example.androidapp.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.androidapp.UserData
+import com.example.androidapp.data.model.UserData
 import com.example.androidapp.data.remote.RemoteUserRepository
-import com.example.androidapp.repository.UserRepository
+import com.example.androidapp.data.repository.UserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

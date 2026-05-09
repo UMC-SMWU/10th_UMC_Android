@@ -1,7 +1,7 @@
 package com.example.androidapp.data.local
 
-import com.example.androidapp.repository.UserRepository
-import com.example.androidapp.UserData
+import com.example.androidapp.data.repository.UserRepository
+import com.example.androidapp.data.model.UserData
 
 class LocalUserRepository : UserRepository {
     // 추후 Room DB 연동 시 구현
