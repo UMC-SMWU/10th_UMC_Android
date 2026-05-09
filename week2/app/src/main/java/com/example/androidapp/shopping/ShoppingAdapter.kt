@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidapp.R
-import com.example.androidapp.shopping.ShoppingData
-import com.example.androidapp.shopping.ShoppingViewModel
+import com.example.androidapp.data.model.ShoppingData
+import com.example.androidapp.viewModel.ShoppingViewModel
 import com.example.androidapp.databinding.ShoppingItemBinding
 
 class ShoppingAdapter(

@@ -10,9 +10,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.androidapp.R
 import com.example.androidapp.databinding.FragmentShoppingBinding
 import com.example.androidapp.shopping.ShoppingAdapter
-import com.example.androidapp.shopping.ShoppingData
-import com.example.androidapp.shopping.ShoppingViewModel
+import com.example.androidapp.data.model.ShoppingData
+import com.example.androidapp.viewModel.ShoppingViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ShoppingFragment : Fragment() {
     private var _binding: FragmentShoppingBinding? = null
     private val binding get() = _binding!!

@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidapp.databinding.FragmentWishlistBinding
 import com.example.androidapp.shopping.ShoppingAdapter
-import com.example.androidapp.shopping.ShoppingViewModel
+import com.example.androidapp.viewModel.ShoppingViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 

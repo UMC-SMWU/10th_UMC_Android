@@ -10,7 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.androidapp.databinding.FragmentUserBinding
-import com.example.androidapp.viewmodel.UserViewModel
+import com.example.androidapp.viewModel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

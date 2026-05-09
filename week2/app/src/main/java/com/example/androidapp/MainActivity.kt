@@ -11,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.androidapp.shopping.ShoppingContainerFragment
 import com.example.androidapp.MainBottomBar
 import com.example.androidapp.shopping.tab.ShoppingFragment
-import com.example.androidapp.viewmodel.UserViewModel
+import com.example.androidapp.viewModel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
