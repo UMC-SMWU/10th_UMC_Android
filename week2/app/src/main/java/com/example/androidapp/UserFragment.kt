@@ -11,13 +11,16 @@ import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.androidapp.databinding.FragmentUserBinding
 import com.example.androidapp.viewmodel.UserViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class UserFragment : Fragment() {
     private var _binding: FragmentUserBinding? = null
     private val binding get() = _binding!!
     private val viewModel: UserViewModel by viewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
