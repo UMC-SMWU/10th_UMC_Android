@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -71,6 +72,10 @@ dependencies {
 
     // ComposeView 사용할 때 사용
     implementation("androidx.activity:activity-compose:1.9.0")
+
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.kotlinx.serialization.json)
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.2")
 
     implementation("com.squareup:javapoet:1.13.0")
     implementation("androidx.fragment:fragment-ktx:1.6.2")

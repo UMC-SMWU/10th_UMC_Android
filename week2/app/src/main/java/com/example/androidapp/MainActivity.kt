@@ -2,72 +2,98 @@ package com.example.androidapp
 
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import com.example.androidapp.databinding.ActivityMainBinding
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
-import com.example.androidapp.shopping.ShoppingContainerFragment
-import com.example.androidapp.MainBottomBar
-import com.example.androidapp.shopping.tab.ShoppingFragment
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.androidapp.viewModel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+class MainActivity : ComponentActivity() {
+
     private val TAG = "LIFE_QUIZ"
 
     private val viewModel: UserViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        enableEdgeToEdge()
 
         Log.d(TAG, "onCreate")
 
-        replaceFragment(HomeFragment())
+        setContent {
 
-        binding.composeBottomBar.setContent {
-            MainBottomBar { tab ->
-                navigateTo(tab)
-            }
-        }
-        lifecycleScope.launch {
+            val navController = rememberNavController()
 
-            viewModel.userList.collect { users ->
+            val users =
+                viewModel.userList.collectAsStateWithLifecycle()
 
-                Log.d(TAG, "users size = ${users.size}")
+            LaunchedEffect(users.value) {
 
-                users.forEach {
+                Log.d(TAG, "users size = ${users.value.size}")
+
+                users.value.forEach {
                     Log.d(TAG, it.first_name)
                 }
             }
+
+            Scaffold(
+
+                bottomBar = {
+
+                    MainBottomBar(
+                        onTabSelected = { tab ->
+
+                            navController.navigate(tab) {
+
+                                popUpTo(navController.graph.startDestinationId)
+
+                                launchSingleTop = true
+                            }
+                        }
+                    )
+                }
+
+            ) { innerPadding ->
+
+                NavHost(
+                    navController = navController,
+                    startDestination = "home",
+                    modifier = Modifier.padding(innerPadding)
+                ) {
+
+                    composable("home") {
+                        HomeScreen()
+                    }
+
+                    composable("shopping") {
+                        ShoppingScreen()
+                    }
+
+                    composable("wishlist") {
+                        WishlistScreen()
+                    }
+
+                    composable("bag") {
+                        BagScreen()
+                    }
+
+                    composable("user") {
+                        UserScreen()
+                    }
+                }
+            }
         }
-    }
-
-    private fun navigateTo(tab: String) {
-        val fragment = when (tab) {
-            "home" -> HomeFragment()
-            "shopping" -> ShoppingContainerFragment()
-            "wishlist" -> WishlistFragment()
-            "bag" -> BagFragment()
-            "user" -> UserFragment()
-            else -> HomeFragment()
-        }
-
-        replaceFragment(fragment)
-    }
-
-    private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.main_fragmentContainer, fragment)
-            .commit()
     }
 
     override fun onStart() {
