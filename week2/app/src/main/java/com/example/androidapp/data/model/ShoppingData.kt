@@ -1,4 +1,4 @@
-package com.example.androidapp.shopping
+package com.example.androidapp.data.model
 
 data class ShoppingData(
     val icon: Int,

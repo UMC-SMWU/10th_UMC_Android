@@ -1,4 +1,4 @@
-package com.example.androidapp
+package com.example.androidapp.data.model
 
 data class UserResponse(
     val data: UserData

@@ -11,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidapp.databinding.FragmentHomeBinding
-import com.example.androidapp.shopping.ShoppingViewModel
+import com.example.androidapp.viewModel.ShoppingViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
