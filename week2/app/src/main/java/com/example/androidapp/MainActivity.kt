@@ -6,14 +6,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.androidapp.shopping.tab.ShoppingScreen
 import com.example.androidapp.viewModel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,38 +38,21 @@ class MainActivity : ComponentActivity() {
             val users =
                 viewModel.userList.collectAsStateWithLifecycle()
 
-            LaunchedEffect(users.value) {
+            Log.d(TAG, "users size = ${users.value.size}")
 
-                Log.d(TAG, "users size = ${users.value.size}")
-
-                users.value.forEach {
-                    Log.d(TAG, it.first_name)
-                }
+            users.value.forEach {
+                Log.d(TAG, it.first_name)
             }
 
-            Scaffold(
-
-                bottomBar = {
-
-                    MainBottomBar(
-                        onTabSelected = { tab ->
-
-                            navController.navigate(tab) {
-
-                                popUpTo(navController.graph.startDestinationId)
-
-                                launchSingleTop = true
-                            }
-                        }
-                    )
-                }
-
-            ) { innerPadding ->
+            Column(
+                modifier = Modifier.fillMaxSize()
+            ) {
 
                 NavHost(
                     navController = navController,
                     startDestination = "home",
-                    modifier = Modifier.padding(innerPadding)
+                    modifier = Modifier
+                        .weight(1f)
                 ) {
 
                     composable("home") {
@@ -92,6 +75,12 @@ class MainActivity : ComponentActivity() {
                         UserScreen()
                     }
                 }
+                MainBottomBar(
+                    onTabSelected = { tab ->
+
+                        navController.navigate(tab)
+                    }
+                )
             }
         }
     }
