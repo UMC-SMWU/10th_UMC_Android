@@ -76,6 +76,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.2")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
     implementation("com.squareup:javapoet:1.13.0")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
