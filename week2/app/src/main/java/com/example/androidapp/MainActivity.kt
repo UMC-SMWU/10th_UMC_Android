@@ -68,7 +68,13 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable("bag") {
-                        BagScreen()
+                        BagScreen(
+
+                            onNavigateShopping = {
+
+                                navController.navigate("shopping")
+                            }
+                        )
                     }
 
                     composable("user") {
