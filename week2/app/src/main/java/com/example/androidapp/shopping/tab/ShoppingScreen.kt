@@ -1,9 +1,8 @@
-package com.example.androidapp.shopping.tab
+package com.example.androidapp
 
-import android.R.attr.bottom
-import com.example.androidapp.R
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,10 +16,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,59 +32,66 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.foundation.lazy.items
-
-
-data class ShoppingItemData(
-
-    val image: Int,
-
-    val title: String,
-
-    val category: String,
-
-    val color: String,
-
-    val price: String
-)
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.androidapp.data.model.ShoppingData
+import com.example.androidapp.viewModel.ShoppingViewModel
 
 @Composable
-fun ShoppingScreen() {
+fun ShoppingScreen(
 
-    val itemList = listOf(
+    viewModel: ShoppingViewModel = hiltViewModel()
 
-        ShoppingItemData(
-            R.drawable.shopping_item,
-            "Nike Everyday Plus\nCushioned",
-            "Training Ankle Socks (6\nPairs)",
-            "5 Colours",
-            "US$10"
-        ),
+) {
 
-        ShoppingItemData(
-            R.drawable.shopping_item,
-            "Nike Elite Crew",
-            "Basketball Socks",
-            "7 Colours",
-            "US$16"
-        ),
+    val itemList by viewModel.itemList.collectAsStateWithLifecycle()
 
-        ShoppingItemData(
-            R.drawable.home_item1,
-            "Nike Air Force 1 '07",
-            "Women's Shoes",
-            "5 Colours",
-            "US$115"
-        ),
+    LaunchedEffect(Unit) {
 
-        ShoppingItemData(
-            R.drawable.home_item2,
-            "Jordan ENike Air Force\n1 '07 essentials",
-            "Men's Shoes",
-            "2 Colours",
-            "US$115"
+        val dummyList = listOf(
+
+            ShoppingData(
+                icon = R.drawable.shopping_item,
+                name = "Nike Everyday Plus\nCushioned",
+                category = "Training Ankle Socks (6\nPairs)",
+                color = "5 Colours",
+                price = "US$10",
+                isLiked = false
+            ),
+
+            ShoppingData(
+                icon = R.drawable.shopping_item,
+                name = "Nike Elite Crew",
+                category = "Basketball Socks",
+                color = "7 Colours",
+                price = "US$16",
+                isLiked = false
+            ),
+
+            ShoppingData(
+                icon = R.drawable.home_item1,
+                name = "Nike Air Force 1 '07",
+                category = "Women's Shoes",
+                color = "5 Colours",
+                price = "US$115",
+                isLiked = false
+            ),
+
+            ShoppingData(
+                icon = R.drawable.home_item2,
+                name = "Jordan ENike Air Force\n1 '07 essentials",
+                category = "Men's Shoes",
+                color = "2 Colours",
+                price = "US$115",
+                isLiked = false
+            )
         )
-    )
+
+        if (itemList.isEmpty()) {
+
+            viewModel.saveItems(dummyList)
+        }
+    }
 
     LazyColumn(
 
@@ -95,6 +104,7 @@ fun ShoppingScreen() {
     ) {
 
         item {
+
             Text(
 
                 text = "구매하기",
@@ -110,25 +120,53 @@ fun ShoppingScreen() {
         }
 
         items(
+
             items = itemList.chunked(2),
 
             key = { row ->
-                row.first().title
+                row.first().name
             }
+
         ) { rowItems ->
 
             Row(
+
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 20.dp),
 
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
+
             ) {
+
                 rowItems.forEach { item ->
 
-                    ShoppingItem(item)
+                    ShoppingItem(
+
+                        item = item,
+
+                        onHeartClick = {
+
+                            val updatedList = itemList.map {
+
+                                if (it.name == item.name) {
+
+                                    it.copy(
+                                        isLiked = !it.isLiked
+                                    )
+
+                                } else {
+
+                                    it
+                                }
+                            }
+
+                            viewModel.saveItems(updatedList)
+                        }
+                    )
                 }
             }
+
             Spacer(modifier = Modifier.height(30.dp))
         }
     }
@@ -136,7 +174,11 @@ fun ShoppingScreen() {
 
 @Composable
 fun ShoppingItem(
-    item: ShoppingItemData
+
+    item: ShoppingData,
+
+    onHeartClick: () -> Unit
+
 ) {
 
     Column {
@@ -145,13 +187,13 @@ fun ShoppingItem(
 
             Image(
 
-                painter = painterResource(id = item.image),
+                painter = painterResource(id = item.icon),
 
-                contentDescription = item.title,
+                contentDescription = item.name,
 
                 modifier = Modifier
-                    .width(200.dp)
-                    .height(200.dp),
+                    .width(170.dp)
+                    .height(170.dp),
 
                 contentScale = ContentScale.Crop
             )
@@ -163,7 +205,11 @@ fun ShoppingItem(
                     .size(38.dp)
                     .clip(CircleShape)
                     .background(Color.White)
-                    .align(Alignment.TopEnd),
+                    .align(Alignment.TopEnd)
+                    .clickable {
+
+                        onHeartClick()
+                    },
 
                 contentAlignment = Alignment.Center
 
@@ -171,11 +217,23 @@ fun ShoppingItem(
 
                 Icon(
 
-                    painter = painterResource(id = R.drawable.ic_emptyheart),
+                    painter = painterResource(
+
+                        id = if (item.isLiked) {
+
+                            R.drawable.ic_filledheart
+
+                        } else {
+
+                            R.drawable.ic_emptyheart
+                        }
+                    ),
 
                     contentDescription = "heart",
 
-                    modifier = Modifier.size(18.dp)
+                    modifier = Modifier.size(18.dp),
+
+                    tint = Color.Unspecified
                 )
             }
         }
@@ -184,7 +242,7 @@ fun ShoppingItem(
 
         Text(
 
-            text = item.title,
+            text = item.name,
 
             fontSize = 15.sp,
 
@@ -195,7 +253,7 @@ fun ShoppingItem(
 
         Text(
 
-            text = item.category,
+            text = item.category ?: "",
 
             fontSize = 15.sp,
 
@@ -206,7 +264,7 @@ fun ShoppingItem(
 
         Text(
 
-            text = item.color,
+            text = item.color ?: "",
 
             fontSize = 15.sp,
 
@@ -217,7 +275,7 @@ fun ShoppingItem(
 
         Text(
 
-            text = item.price,
+            text = item.price ?: "",
 
             fontSize = 15.sp,
 
