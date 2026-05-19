@@ -30,6 +30,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.androidapp.viewModel.ShoppingViewModel
 
+
 @Composable
 fun HomeScreen(
 
@@ -45,7 +46,6 @@ fun HomeScreen(
         modifier = Modifier
             .fillMaxSize()
             .padding(top = 70.dp)
-            .verticalScroll(rememberScrollState())
     ) {
 
         item{
@@ -53,7 +53,7 @@ fun HomeScreen(
                 text = "Discover",
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(start = 50.dp)
+                modifier = Modifier.padding(start = 30.dp)
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -62,7 +62,7 @@ fun HomeScreen(
                 text = "3월 27일 금요일",
                 fontSize = 15.sp,
                 color = colorResource(R.color.grey),
-                modifier = Modifier.padding(start = 50.dp)
+                modifier = Modifier.padding(start = 30.dp)
             )
 
             Spacer(modifier = Modifier.height(30.dp))
