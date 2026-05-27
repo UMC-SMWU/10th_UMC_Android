@@ -42,4 +42,21 @@ class ShoppingViewModel @Inject constructor(
             repository.saveItems(items)
         }
     }
+
+    fun toggleLike(name: String) {
+
+        _itemList.value = _itemList.value.map {
+
+            if (it.name == name) {
+
+                it.copy(
+                    isLiked = !it.isLiked
+                )
+
+            } else {
+
+                it
+            }
+        }
+    }
 }
