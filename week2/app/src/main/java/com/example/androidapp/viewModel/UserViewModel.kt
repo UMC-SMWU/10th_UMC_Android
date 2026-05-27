@@ -20,12 +20,7 @@ class UserViewModel @Inject constructor(
     private val _userList = MutableStateFlow<List<UserData>>(emptyList())
     val userList: StateFlow<List<UserData>> = _userList
 
-    init {
-        fetchUser(1)
-        fetchUserList(1)
-    }
-
-    private fun fetchUser(id: Int) {
+    fun fetchUser(id: Int) {
         viewModelScope.launch {
             try {
                 _user.value = repository.getUser(id)  // Repository에게 요청
@@ -35,7 +30,7 @@ class UserViewModel @Inject constructor(
         }
     }
 
-    private fun fetchUserList(page: Int) {
+    fun fetchUserList(page: Int) {
         viewModelScope.launch {
             try {
                 _userList.value = repository.getUserList(page)  // Repository에게 요청

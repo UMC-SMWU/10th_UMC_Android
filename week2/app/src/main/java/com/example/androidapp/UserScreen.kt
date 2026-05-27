@@ -11,6 +11,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PageSize
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -19,6 +22,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,10 +32,26 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.androidapp.viewModel.UserViewModel
+import androidx.compose.runtime.getValue
+import coil.compose.AsyncImage
+import androidx.compose.ui.layout.ContentScale
 
 @Composable
-fun UserScreen() {
+fun UserScreen(
+    viewModel: UserViewModel = hiltViewModel()
+) {
 
+    val user by viewModel.user.collectAsState()
+    val userList by viewModel.userList.collectAsState()
+
+    LaunchedEffect(Unit) {
+
+        viewModel.fetchUser(1)
+
+        viewModel.fetchUserList(1)
+    }
     Column(
 
         modifier = Modifier
@@ -41,13 +62,18 @@ fun UserScreen() {
 
         Spacer(modifier = Modifier.height(60.dp))
 
-        Box(
+        AsyncImage(
+
+            model = user?.avatar,
+
+            contentDescription = "profile image",
 
             modifier = Modifier
                 .size(100.dp)
                 .align(Alignment.CenterHorizontally)
-                .clip(CircleShape)
-                .background(Color.LightGray)
+                .clip(CircleShape),
+
+            contentScale = ContentScale.Crop
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -55,7 +81,9 @@ fun UserScreen() {
 
         Text(
 
-            text = "닉네임",
+            text = user?.let {
+                "${it.first_name} ${it.last_name}"
+            } ?: "Loading...",
 
             fontSize = 20.sp,
 
@@ -192,7 +220,7 @@ fun UserScreen() {
 
             Text(
 
-                text = "팔로잉 (3)",
+                text = "팔로잉 (${userList.size})",
 
                 fontSize = 16.sp,
 
@@ -212,34 +240,33 @@ fun UserScreen() {
         Spacer(modifier = Modifier.height(17.dp))
 
 
-        Row(
+        val pagerState = rememberPagerState(
+            pageCount = { userList.size }
+        )
 
+        HorizontalPager(
+            state = pagerState,
+            pageSize = PageSize.Fixed(110.dp),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
+            pageSpacing = 6.dp
+        ) { page ->
 
-            horizontalArrangement = Arrangement.spacedBy(6.dp)
+            val followingUser = userList[page]
 
-        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                AsyncImage(
+                    model = followingUser.avatar,
+                    contentDescription = "following user image",
+                    modifier = Modifier
+                        .size(110.dp),
+                    contentScale = ContentScale.Crop
+                )
 
-            repeat(4) {
-
-                Column(
-
-                    horizontalAlignment = Alignment.CenterHorizontally
-
-                ) {
-
-                    Box(
-
-                        modifier = Modifier
-                            .size(110.dp)
-                            .background(Color.LightGray)
-                    )
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                }
+                Spacer(modifier = Modifier.height(8.dp))
             }
         }
 
