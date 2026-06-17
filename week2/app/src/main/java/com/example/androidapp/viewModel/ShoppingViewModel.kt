@@ -43,20 +43,17 @@ class ShoppingViewModel @Inject constructor(
         }
     }
 
-    fun toggleLike(name: String) {
-
-        _itemList.value = _itemList.value.map {
-
-            if (it.name == name) {
-
-                it.copy(
-                    isLiked = !it.isLiked
-                )
-
-            } else {
-
-                it
+    fun toggleLike(id: Long) {
+        viewModelScope.launch {
+            val updatedItems = _itemList.value.map { item ->
+                if (item.id == id) {
+                    item.copy(isLiked = !item.isLiked)
+                } else {
+                    item
+                }
             }
+
+            repository.saveItems(updatedItems)
         }
     }
 }
