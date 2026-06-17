@@ -124,7 +124,7 @@ fun ShoppingScreen(
             items = itemList.chunked(2),
 
             key = { row ->
-                row.first().name
+                row.joinToString(separator = "_") { it.name }
             }
 
         ) { rowItems ->
