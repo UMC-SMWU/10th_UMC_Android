@@ -14,6 +14,7 @@ class ShoppingRepositoryImpl @Inject constructor(
     private val dummyItems = listOf(
 
         ShoppingData(
+            1L,
             R.drawable.shopping_item,
             "Nike Everyday Plus Cushioned",
             "Training Ankle Socks (6 Pairs)",
@@ -22,6 +23,7 @@ class ShoppingRepositoryImpl @Inject constructor(
         ),
 
         ShoppingData(
+            2L,
             R.drawable.shopping_item,
             "Nike Elite Crew",
             "Basketball Socks",
@@ -30,6 +32,7 @@ class ShoppingRepositoryImpl @Inject constructor(
         ),
 
         ShoppingData(
+            3L,
             R.drawable.home_item1,
             "Nike Air Force 1 '07",
             "Women's Shoes",
@@ -38,6 +41,7 @@ class ShoppingRepositoryImpl @Inject constructor(
         ),
 
         ShoppingData(
+            4L,
             R.drawable.home_item2,
             "Jordan ENike Air Force 1 '07 essentials",
             "Men's Shoes",

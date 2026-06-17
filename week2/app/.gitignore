@@ -1,1 +1,8 @@
 /build
+
+# Local configuration
+local.properties
+
+# Keystore files
+*.jks
+*.keystore
